@@ -1,0 +1,46 @@
+Claude provided this detail
+
+--
+
+Let me break down what each anomaly detection section is looking for:
+1. Volume Anomalies (detect_volume_anomalies)
+What it's looking for:
+
+Trades with volumes that are statistical outliers (Z-score > 2.5 standard deviations)
+Trades with volumes exceeding 3x the historical average for that symbol
+Unusually large block trades that could indicate insider trading or market manipulation
+
+Why it's suspicious: Sudden volume spikes often precede price movements and can indicate someone trading on material non-public information.
+2. Price Anomalies (detect_price_anomalies)
+What it's looking for:
+
+Sudden price changes that exceed 3 standard deviations from normal volatility
+Trades executed at prices significantly different (>5%) from the recent moving average
+Sharp price spikes or drops that don't align with market conditions
+
+Why it's suspicious: Artificial price movements can indicate pump-and-dump schemes, spoofing, or attempts to trigger stop-loss orders.
+3. Cancellation Anomalies (detect_cancel_anomalies)
+What it's looking for:
+
+Traders with high cancel ratios (>80% of orders cancelled vs executed)
+Rapid cancel patterns (3+ cancellations within 60 seconds on same symbol)
+Quote stuffing behavior (flooding the order book then quickly cancelling)
+
+Why it's suspicious: This can be used to create false liquidity, manipulate bid/ask spreads, or slow down other traders' systems.
+4. Wash Trading (detect_wash_trading)
+What it's looking for:
+
+Traders with alternating buy/sell patterns (>70% alternating over 6+ trades)
+Self-trading patterns where the same entity buys and sells to create artificial volume
+Back-and-forth trading that doesn't change net position
+
+Why it's suspicious: Wash trading creates false volume and price activity, misleading other market participants about true supply/demand.
+5. Timing Anomalies (detect_timing_anomalies)
+What it's looking for:
+
+Burst trading patterns (multiple actions within 5-second intervals)
+High-frequency trading that might indicate algorithmic manipulation
+Coordinated timing across multiple actions
+
+Why it's suspicious: Unnaturally fast trading can indicate front-running, latency arbitrage abuse, or coordinated market manipulation.
+Each section uses different statistical thresholds and pattern recognition to catch specific types of market abuse. The system is designed to flag behavior that deviates significantly from normal trading patterns, which often indicates either technical issues or intentional manipulation.
